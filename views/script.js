@@ -13,11 +13,11 @@ function onHtmlLoadet(){
    const comment=new Comment();
    const comments=new Comments();
    //FORMS
+   const addProjectForm= document.getElementById("addprojectform");
    const addUserForm=document.getElementById("adduserform");
    const addSprintForm=document.getElementById("addsprintform");
    const createIssueForm=document.getElementById("createissueform");
-   const addTasksForm=document.getElementById("addtaskform");
-   const addComentForm=document.getElementById("addcommentform");
+
    //BUTTONS
    const initButton=document.getElementById("init");
    const addUserButton=document.getElementById("adduser");
@@ -26,6 +26,8 @@ function onHtmlLoadet(){
    const createIssueButton=document.getElementById("createissue");
    const addTaskButton=document.getElementById("addtask");
    const addComentButton=document.getElementById("addcomment");
+   const closeIssueForm=document.getElementById("closeissueform")
+   
   
    //DATE
    const date=new Date();
@@ -34,9 +36,27 @@ function onHtmlLoadet(){
    //GLOBAL VARIABLES
    const currentIssue=issue.getIssue();
    const allIssues=issues.getIssues();
- 
+   const allSprints= sprints.getSprints()
+   const allAddItems=document.getElementsByTagName("h4")
+   const projectContent=document.getElementById("displaycontent");
+   //DISPLAING THE ADD FORM
+   for(let i=0;i<allAddItems.length;i++){
+       allAddItems[i].addEventListener("click",function(e){
+           e.preventDefault()
+           const addForm= e.path[1].children[1]
+           addForm.style.display="block"
+           
+       })
+   }
+   //ADD PROJECT 
    initButton.addEventListener("click",function(e){
        e.preventDefault()
+       const projectName=document.getElementById("projectname")
+       project.name=projectName.value
+       addProjectForm.reset()
+       e.path[1].style.display="none"
+       
+       //ADING COMPONENTS TO LOCAL STORAGE
        LocalStorage.project(project);
        LocalStorage.user(user);
        LocalStorage.users(users);
@@ -48,18 +68,25 @@ function onHtmlLoadet(){
        LocalStorage.tasks(tasks);
        LocalStorage.comment(comment)
        LocalStorage.comments(comments)
+      
    });
+    //DISPLAING PROJECT NAME 
+   const projectTitle=document.getElementById("pname")
+   projectTitle.innerHTML=project.getProgject().name
    //ADD USER 
    addUserButton.addEventListener("click",function(e){
+      
        const userName=document.getElementById("username");
        e.preventDefault();
        user.addUserToLocalStorage(userName.value,user);
        users.addUsersToLocalStorage(users);
        addUserForm.reset()
+       e.path[1].style.display="none"
     
    });
   //VERIFYING IF THE USER WAS ALREADY ADDED
    logInButton.addEventListener("click",function(e){
+       
       e.preventDefault();
       const allUsers=users.getUsers()
       for(let i=0;i<allUsers.allUsers.length;i++){
@@ -69,6 +96,7 @@ function onHtmlLoadet(){
          
       }
       addUserForm.reset()
+      e.path[1].style.display="none"
    });
   //ADD SPRINT
    addSprintButton.addEventListener("click",function(e){
@@ -78,6 +106,7 @@ function onHtmlLoadet(){
        sprints.addSprintsToLocalStorage(sprints);
        project.addSprintIdToProject(project)
        addSprintForm.reset()
+       e.path[1].style.display="none"
        
        
    });
@@ -108,6 +137,7 @@ function onHtmlLoadet(){
        issue.addIssueToLocalStorage(issueData,issue)
        issues.addIssuesToLocalStorage(issues)
        createIssueForm.reset()
+
        
    });
    //ADD TASKS
@@ -133,7 +163,8 @@ function onHtmlLoadet(){
          tasks.addTasksToLocalStorage(tasks)
          addTaskIdToIssue(currentIssue,issue,task)
          addEditedIssueToIssues(allIssues,issues,issue)
-         addTasksForm.reset();
+         createIssueForm.reset()
+        
    });
    //ADD COMMENTS
    addComentButton.addEventListener("click",function(e){
@@ -143,10 +174,28 @@ function onHtmlLoadet(){
        comments.addCommentsToLocalStorage(comments);
        addCommentIdToIssue(currentIssue,issue,comment);
        addEditedIssueToIssues(allIssues,issues,issue)
-       addComentForm.reset();
+       createIssueForm.reset()
+   
    });
-
-   // displayIssues(allIssues,sprint,user,currentDate,issue,issues);
+   closeIssueForm.addEventListener("click",function(e){
+    e.path[1].style.display="none"
+   })
+   //DISPLAY ALL SPRINTS
+   const displaySprints=document.getElementById("sprintprojectcontent")
+   displaySprints.addEventListener("click",function(e){
+    displayProjectSprints(allSprints,allIssues,projectContent)
+   })
+   //DISPLAY ISSUES
+   const displayIssuesonPage=document.getElementById("allissuescontent")
+   displayIssuesonPage.addEventListener("click",function(e){
+    e.preventDefault()
+    displayIssues(allIssues,sprint,user,currentDate,issue,issues,projectContent,users) 
+   })
+   const displayIssuesStatus=document.getElementById("issuestatuscontent")
+   displayIssuesStatus.addEventListener("click",function(e){
+       e.preventDefault()
+       displayIssueStatus(projectContent,allIssues)
+   })
 }
 function addTaskIdToIssue(currentIssue,issue,task){
     currentIssue=issue.getIssue()
@@ -174,12 +223,13 @@ function addCommentIdToIssue(currentIssue,issue,comment){
     currentIssue.comments.push(currentCommentId)
     issue.saveEditedIssue(currentIssue)
 }
-function displayIssues(allIssues,sprint,user,currentDate,issue,issues){
-  
-    const issuesContent=document.getElementById("issues")
-        for(let i=0;i<allIssues.allIssues.length;i++){
+function displayIssues(allIssues,sprint,user,currentDate,issue,issues,projectContent,users){
+        projectContent.innerHTML="<div></div>"
+   // const issuesContent=document.getElementById("issues")
+        for(let i=0;i<allIssues.allIssues.length;i++){ 
         const issueItem=document.createElement("div");
               issueItem.id=i+"issueItem"
+              issueItem.className="issuedisplayed"
         const issueName=document.createElement("div");
               issueName.className="issuename";
               issueName.innerHTML=allIssues.allIssues[i].name
@@ -192,6 +242,18 @@ function displayIssues(allIssues,sprint,user,currentDate,issue,issues){
               issueItemStatus.className="issuestatus";
               issueItemStatus.innerHTML="Staus: "+allIssues.allIssues[i].status
               issueItem.appendChild(issueItemStatus)
+        const issueItemCreatedBy=document.createElement("div");
+              issueItemCreatedBy.innerHTML="Created by: "+getUserName(users,allIssues.allIssues[i].createdBy)
+              issueItem.appendChild(issueItemCreatedBy)
+        const issueItemCreadetAt=document.createElement("div");
+              issueItemCreadetAt.innerHTML="Created at:  "+allIssues.allIssues[i].createdAt
+              issueItem.appendChild(issueItemCreadetAt)
+        const issueItemUpdatedAt=document.createElement("div");
+              issueItemUpdatedAt.innerHTML="Updated at:  "+allIssues.allIssues[i].updateAt
+              issueItem.appendChild(issueItemUpdatedAt)
+        const issueItemDescription=document.createElement("div");
+              issueItemDescription.innerHTML="Description: "+allIssues.allIssues[i].description
+              issueItem.appendChild(issueItemDescription)
         const editButton=document.createElement("button")
               editButton.id=allIssues.allIssues[i].id
               editButton.innerHTML="Edit"
@@ -199,16 +261,18 @@ function displayIssues(allIssues,sprint,user,currentDate,issue,issues){
 
               editButton.addEventListener("click",function(e){
                   e.preventDefault()
-                  console.log(e.path["0"].id)
+                 
                   editIssue(allIssues,e.path["0"].id,issueItem,sprint,user,currentDate,issue,issues)
               })
-        issuesContent.appendChild(issueItem)
+        projectContent.appendChild(issueItem)
+      
+        
         }
 }
 function setStatusId(statusList){
     let statusId=""
     if(statusList.value==="new"){
-        statusId="New"
+        statusId="new"
     }else if(statusList.value==="inprogress"){
         statusId="In progress"
     }else if(statusList.value==="feedback"){
@@ -218,7 +282,7 @@ function setStatusId(statusList){
     }else if(statusList.value==="readyfortesting"){
         statusId="Ready for testing"
     }
-    console.log(statusId)
+    
     return statusId
 }
 function editIssue(allIssues,issueToEditId,issueItem,sprint,user,currentDate,issue,issues){
@@ -229,9 +293,7 @@ function editIssue(allIssues,issueToEditId,issueItem,sprint,user,currentDate,iss
               editContent.id="editcontent";
         const editItem=document.createElement("div")
               editItem.id="editItem"
-              editItem.innerHTML= "<div class='editItemName'>"+issueToEditItem.name+"</div>"+
-                                  "<div class='editItemStatus'> Status: "+issueToEditItem.status+"</div>"+
-                                  "<form id='"+i+"editIssueForm' >Type of: "+
+              editItem.innerHTML= "<form id='"+i+"editIssueForm' >Type of: "+
                                   "<select  name='edittypelist' id='"+i+"editissuetype'>"+
                                   "<option id='"+i+"editfetureop' value='features'selected='selected'>Features</option>"+
                                   "<option id='"+i+"editbugsop' value='bugs'>Bugs</option>"+
@@ -246,7 +308,7 @@ function editIssue(allIssues,issueToEditId,issueItem,sprint,user,currentDate,iss
                                   "<option id='"+i+"editfeedbackid' value='feedback'>Feedback</option>"+
                                   "<option id='"+i+"editresolvedid' value='resolved'>Resolved</option>"+
                                   "<option id='"+i+"editreadyfortestingid' value='readyfortesting'>Ready for Testing</option></select><br><br>"+
-                                  "<input type='button' id='"+i+"addeditedissue' value='Add Edited Issue'>"
+                                  "<input type='button' id='"+i+"addeditedissue' value='Save'>"
                                 
                                  
                editContent.appendChild(editItem);
@@ -279,7 +341,8 @@ function editIssue(allIssues,issueToEditId,issueItem,sprint,user,currentDate,iss
             e.preventDefault()
             issue.saveEditedIssue(editedIssueItem)
             addEditedIssueToIssues(allIssues,issues,issue)
-            console.log(editedIssueItem,"editeddd")
+            e.path[1].style.display="none"
+            
         })
           
           
@@ -288,4 +351,101 @@ function editIssue(allIssues,issueToEditId,issueItem,sprint,user,currentDate,iss
        }
     }
     
+}
+function displayProjectSprints(allSprints,allIssues,projectContent){
+   
+    projectContent.innerHTML="<div></div>"
+    for(let i=0;i<allSprints.allSprints.length;i++){
+        
+        const sprintId=allSprints.allSprints[i].id
+        const sprint=document.createElement("div")
+              sprint.className="sprintItem"
+              sprint.innerHTML="<div class='sprintname'>"+allSprints.allSprints[i].name+"</div>"
+              projectContent.appendChild(sprint)
+       
+        for(let j=0;j<allIssues.allIssues.length;j++){
+            if(sprintId===allIssues.allIssues[j].sprint){
+               
+                     const issueSprintItem=document.createElement("div")
+                           issueSprintItem.innerHTML="<div class='sprintissue'>"+allIssues.allIssues[j].name+"</div"
+                           sprint.appendChild(issueSprintItem)             
+                      
+            }
+        }
+    }
+    
+}
+function getUserName(users,itemId){
+    const allUsers =users.getUsers()
+    for(let i=0;i<allUsers.allUsers.length;i++){
+
+        if(allUsers.allUsers[i].id===itemId)
+        return allUsers.allUsers[i].name
+    }
+   
+
+}
+function displayIssueStatus(projectContent,allIssues){
+    projectContent.innerHTML="<div class='issuesstatus'>"+
+                             "<div>New</div>"+
+                             "<div id='issuesnewstatus'></div>"+
+                             "</div>"+
+                             "<div class='issuesstatus'>"+
+                             "<div>In Progres</div>"+
+                             "<div id='issuesinprogress'></div>"+
+                             "</div>"+
+                             "<div class='issuesstatus'>"+
+                             "<div>Feedback</div>"+
+                             "<div  id='issuesfeedback'></div>"+
+                             "</div>"+
+                             "<div class='issuesstatus'>"+
+                             "<div>Resolved</div>"+
+                             "<div id='issuesresolved'></div>"+
+                             "</div>"+
+                             "<div class='issuesstatus'>"+
+                             "<div>Ready for testing</div>"+
+                             "<div id='issuesreadyfortesting'></div>"+
+                             "</div>"
+                            
+    for(let i=0;i<allIssues.allIssues.length;i++){
+        if(allIssues.allIssues[i].status==="new"){
+           const newStatusItem=document.createElement("div")
+                 newStatusItem.className="itemstatus"
+                 newStatusItem.innerHTML= "<div>"+allIssues.allIssues[i].name+"</div>"+
+                                          "<div> Type of issue: "+allIssues.allIssues[i].type+"</div>"
+                document.getElementById("issuesnewstatus").appendChild(newStatusItem)                     
+        }else if(allIssues.allIssues[i].status==="In progress"){
+            const inprogressStatusItem=document.createElement("div")
+                  inprogressStatusItem.className="itemstatus"
+                  inprogressStatusItem.innerHTML="<div>"+allIssues.allIssues[i].name+"</div>"+
+                                                 "<div> Type of issue: "+allIssues.allIssues[i].type+"</div>"
+                  document.getElementById("issuesinprogress").appendChild(inprogressStatusItem)
+            
+        }else if(allIssues.allIssues[i].status==="Feedback"){
+            const feedbackStatusItem=document.createElement("div")
+                  feedbackStatusItem.className="itemstatus"
+                  feedbackStatusItem.innerHTML="<div>"+allIssues.allIssues[i].name+"</div>"+
+                                               "<div> Type of issue: "+allIssues.allIssues[i].type+"</div>"
+                  document.getElementById("issuesfeedback").appendChild(feedbackStatusItem)
+
+        }else if(allIssues.allIssues[i].status==="Resolved"){
+            const resolvedStatusItem=document.createElement("div")
+                  resolvedStatusItem.className="itemstatus"
+                  resolvedStatusItem.innerHTML="<div>"+allIssues.allIssues[i].name+"</div>"+
+                                         "<div> Type of issue: "+allIssues.allIssues[i].type+"</div>"
+                  document.getElementById("issuesresolved").appendChild(resolvedStatusItem)
+
+           
+        }else if(allIssues.allIssues[i].status==="Ready for testing"){
+            const readyStatusItem=document.createElement("div")
+            readyStatusItem.className="itemstatus"
+            readyStatusItem.innerHTML="<div>"+allIssues.allIssues[i].name+"</div>"+
+                                   "<div> Type of issue: "+allIssues.allIssues[i].type+"</div>"
+            document.getElementById("issuesreadyfortesting").appendChild(readyStatusItem)
+
+           
+        }
+       
+    }                   
+
 }

@@ -11,6 +11,6 @@ Sprints.prototype.addSprintsToLocalStorage=function(sprints){
 
 
 Sprints.prototype.getSprints=function(){
-    this.allSprints=JSON.parse(localStorage.getItem("sprints"))
-    return this.allSprints
+    return JSON.parse(localStorage.getItem("sprints"))
+    
 }

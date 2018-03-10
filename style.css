@@ -11,8 +11,14 @@ html {
 header{
     width: 100%;
     height: 100px;
-    border: 1px solid red;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+    
+   
 }
 .container{
     width: 100%;
@@ -25,16 +31,146 @@ header{
 .addcontent{
     margin: 10px;
     padding: 5px;
-    width: 22%;
+    width: 25%;
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
+    align-items: center;
+    
 }
 h4{
+    margin:5px 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    box-shadow: 3px 3px 7px 3px rgba(133,126,133,1);
+}
+h4:hover{
+    cursor: pointer;
+}
+h5{
     margin: 5px;
-    text-align: center;
+}
+.additem{
+    
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .addform{
+    width: 100%;
     margin: 10px 0px;
-    /* display: none; */
+    padding: 10px 5px;
+    display: none;
+    background-color: rgb(233, 206, 206);
+   
+}
+.issueitem{
+    width: 100%;
+    margin: 10px 0px;
+    padding: 10px;
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.75);
+    background-color: rgb(243, 230, 230);
+   
+}
+.projectcontent{
+    margin: 10px auto;
+    padding: 5px;
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items:flex-start;
+    
+}
+.content{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    align-items: flex-start;
+    
+}
+.title{
+    width: 30%;
+    margin:5px 0px;
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    box-shadow: 3px 3px 7px 3px rgba(133,126,133,1);
+}
+.title:hover{
+    cursor: pointer;
+}
+
+.sprintItem{
+    margin: 20px 10px;
+    width: 45%;
+    height: 150px;
+    overflow: auto;
+    box-shadow: 1px 1px 6px 1px rgb(112, 110, 112);
+}
+.sprintname{
+    margin: 5px 0px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+
+}
+.sprintissue{
+    font-size: 18px;
+    margin: 3px 0px;
+    padding: 3px 10px;
+}
+.issuedisplayed{
+    width: 48%;
+    margin: 15px 0px;
+    padding: 10px;
+    box-shadow: 1px 1px 6px 1px rgb(94, 92, 94);
+   
+}
+.issuename{
+    font-size: 15px;
+    font-weight: bold;
+    margin: 5px 0px;
+    text-align: center;
+}
+.issuedisplayed div{
+    font-size: 17px;
+    margin: 2px;
+}
+.issuesstatus{
+    width: 48%;
+    margin: 15px 0px;
+    padding: 10px;
+    box-shadow: 1px 1px 6px 1px rgb(94, 92, 94);
+    height: 170px;
+    overflow: auto;
+   
+}
+.itemstatus{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.itemstatus div{
+    margin: 5px 10px;
+}
+.issuesstatus >div:first-child{
+    margin: 10px 0px;
+    text-align: center;
+    font-size: 18px ;
+    font-weight: bold;
+
 }

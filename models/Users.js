@@ -12,6 +12,6 @@ Users.prototype.addUsersToLocalStorage=function(users){
 }
 
 Users.prototype.getUsers=function(){
-      allUsers=JSON.parse(localStorage.getItem("users"))
-      return allUsers
+      return    JSON.parse(localStorage.getItem("users"))
+     
 }
