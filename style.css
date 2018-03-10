@@ -7,15 +7,18 @@
 html {
     position: relative;
     min-height: 100%;
+    
   }
 header{
     width: 100%;
-    height: 100px;
+    height: 150px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #559E54;
+    color:#091034
    
     
    
@@ -25,7 +28,7 @@ header{
     position: relative;
     display: flex;
     flex-direction: row;
-
+    
 
 }
 .addcontent{
@@ -46,6 +49,7 @@ h4{
     align-items: center;
     height: 50px;
     box-shadow: 3px 3px 7px 3px rgba(133,126,133,1);
+    background-color: #D4F7D4;
 }
 h4:hover{
     cursor: pointer;
@@ -60,6 +64,8 @@ h5{
     display: flex;
     flex-direction: column;
     align-items: center;
+   
+   
 }
 .addform{
     width: 100%;
@@ -109,6 +115,7 @@ h5{
     align-items: center;
     height: 50px;
     box-shadow: 3px 3px 7px 3px rgba(133,126,133,1);
+    background-color: #D4F7D4;
 }
 .title:hover{
     cursor: pointer;

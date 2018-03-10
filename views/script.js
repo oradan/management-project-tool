@@ -190,6 +190,8 @@ function onHtmlLoadet(){
    displayIssuesonPage.addEventListener("click",function(e){
     e.preventDefault()
     displayIssues(allIssues,sprint,user,currentDate,issue,issues,projectContent,users) 
+   
+
    })
    const displayIssuesStatus=document.getElementById("issuestatuscontent")
    displayIssuesStatus.addEventListener("click",function(e){
