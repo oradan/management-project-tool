@@ -146,7 +146,7 @@ function onHtmlLoadet(){
        addComentForm.reset();
    });
 
-   displayIssues(allIssues,sprint,user,currentDate,issue,issues);
+   // displayIssues(allIssues,sprint,user,currentDate,issue,issues);
 }
 function addTaskIdToIssue(currentIssue,issue,task){
     currentIssue=issue.getIssue()
@@ -175,7 +175,7 @@ function addCommentIdToIssue(currentIssue,issue,comment){
     issue.saveEditedIssue(currentIssue)
 }
 function displayIssues(allIssues,sprint,user,currentDate,issue,issues){
-    console.log(allIssues);
+  
     const issuesContent=document.getElementById("issues")
         for(let i=0;i<allIssues.allIssues.length;i++){
         const issueItem=document.createElement("div");
