@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Management Tool</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../style.css" type="text/css" />
+        <script type="text/javascript" src="../models/User.js"></script>
+        <script type="text/javascript" src="../models/Users.js"></script>
+        <script type="text/javascript" src="../models/LocalStorage.js"></script>
+        <script type="text/javascript" src="../models/Sprint.js"></script>
+        <script type="text/javascript" src="../models/Sprints.js"></script>
+        <script type="text/javascript" src="../models/Project.js"></script>
+        <script type="text/javascript" src="../models/Issue.js"></script>
+        <script type="text/javascript" src="../models/Issues.js"></script>
+        <script type="text/javascript" src="../models/Task.js"></script>
+        <script type="text/javascript" src="../models/Tasks.js"></script>
+        <script type="text/javascript" src="../models/Comment.js"></script>
+        <script type="text/javascript" src="../models/Comments.js"></script>
+        <script type="text/javascript" src="../views/script.js"></script>
+    </head>
+    <body>
+        
+        <header>
+            <h2>Welcome to your Project Management Tool</h2>
+        </header>
+        <div class="container">
+            <div class="addcontent">
+                    <h4>Add Project</h4>
+                    <form class="addform" id="addprojectform">
+                        <label for="projectname">Project Name :</label>
+                        <input type="text" name="project" id="projectname" value=""><br><br>
+                        <input type="button" id="init" value="Add Project">
+                    </form>
+                    <hr>
+                    <h4>User</h4>
+                    <form class="addform"  id="adduserform">
+                        <label for="username">User Name :</label>
+                        <input type="text" name="user" id="username" value=""><br><br>
+                        <input type="button" id="adduser" value="Add User">
+                        <input type="button" id="login" value="LogIn">
+                                
+                    </form>
+                    <hr>
+                    <h4>Sprint</h4>
+                    <form class="addform"  id="addsprintform">
+                        <label for="sprintname">Sprint Name :</label>
+                        <input type="text" name="sprint" id="sprintname" value=""><br><br>
+                        <input type="button" id="addsprint" value="Add Sprint">
+                            
+                    </form>
+                    <hr>
+                    <h4>Issue</h4>
+                    <form class="addform" id="createissueform">
+                        <label for="issuetype"> Type :</label>
+                        <select  name="typelist" id="issuetype">
+                            <option id="fetureop" value="features"selected="selected">Features</option>
+                            <option id="bugsop" value="bugs">Bugs</option>
+                            <option id="taskspo" value="tasks">Tasks</option>
+                        </select><br><br>
+                        <label for="issuename">Issue Name :</label>
+                        <input type="text" name="issue" id="issuename" value=""><br><br>
+                        <label for="issuedescription"> Description :</label>
+                        <textarea cols="20" rows="3" id="issuedescription"></textarea><br><br>
+                        <label for="issuestatus">Status :</label>
+                        <select  name="statuslist" id="issuestatus">
+                                <option id="newid" value="new"selected="selected">New</option>
+                                <option id="inprogressid" value="inprogress">In progress</option>
+                                <option id="feedbackid" value="feedback">Feedback</option>
+                                <option id="resolvedid" value="resolved">Resolved</option>
+                                <option id="readyfortestingid" value="readyfortesting">Ready for Testing</option>
+                        </select><br><br>
+                        <input type="button" id="createissue" value="Create Issue">
+                                
+                    </form>
+
+                    <h4>Task</h4>
+                    <form class="addform" id="addtaskform">
+                        <label for="tasktype" >Task Type :</label>
+                        <select  name="typelist" id="">
+                            <option id="taskfetureop" value="features"selected="selected">Features</option>
+                            <option id="taskbugsop" value="bugs">Bugs</option>
+                            <option id="tasktaskspo" value="tasks">Tasks</option>
+                        </select><br><br>
+                        <label for="taskname" >Task Name</label>
+                        <input type="text" name="issue" id="taskname" value=""><br><br>
+                        <label for="taskdescription"> Description : </label>
+                        <textarea cols="20" rows="3" id="taskdescription"></textarea><br><br>
+                        <label for="taskstatus">Status :</label>
+                        <select  name="statuslist" id="taskstatus">
+                            <option id="tasknewid" value="new"selected="selected">New</option>
+                            <option id="taskinprogressid" value="inprogress">In progress</option>
+                            <option id="taskfeedbackid" value="feedback">Feedback</option>
+                            <option id="taskresolvedid" value="resolved">Resolved</option>
+                            <option id="taskreadyfortestingid" value="readyfortesting">Ready for Testing</option>
+                        </select><br><br>
+                        <input type="button" id="addtask" value="Add Task">
+                                    
+                    </form>
+                    <h4>Coment</h4>
+                    <form class="addform" id="addcommentform">
+                        <label for="commentname">Comment Name</label>
+                        <input type="text" name="issue" id="commentname" value=""><br><br>
+                        <input type="button" id="addcomment" value="Add Comment"><br><br>
+                    </form>
+            </div>
+        </div>
+        <div class="allissues" id="issues"></div>
+    </body>
+</html>
